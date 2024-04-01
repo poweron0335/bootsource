@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 // 요청하는 주소가 중복되는 경우 RequestMapping("중복 주소") 사용 가능
 @RequestMapping("/sample")
 public class SampleController {
+
     // String, void 형태의 메소드 작성
     // 404 : 경로 없음(오류가 떴을 경우 컨트롤러에 매핑 주소 확인하면 됨)
     // 500 : Error resolving template [sample/basic], template might not exist or

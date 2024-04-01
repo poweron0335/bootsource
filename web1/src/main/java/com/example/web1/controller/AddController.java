@@ -53,7 +53,7 @@ public class AddController {
     // }
 
     @PostMapping("/add")
-    public void addPost(AddDto dto, Model model) { // html 에서 선언한 변수명과 일치해야함
+    public void addPost(AddDto dto, Model model) {
         log.info("/calc/add post 요청");
         log.info("num1 {}", dto.getNum1());
         log.info("num2 {}", dto.getNum2());
@@ -61,6 +61,9 @@ public class AddController {
         // dto.setResult(dto.getNum1() + dto.getNum2());
         model.addAttribute("result", dto.getNum1() + dto.getNum2());
     }
+
+    // 데이터 보내기
+    // request.setAttribute("이름",값) == Model
 
     @GetMapping("/rules")
     public void rulesGet() {
