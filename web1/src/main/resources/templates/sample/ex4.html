@@ -6,14 +6,8 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>EX1</h1>
-    <p th:text="${result}"></p>
-    <script>
-      // const result = '';
-      const result = '[[${result}]]';
-    </script>
-    <script th:inline="javascript">
-      const result1 = [[${result}]];
-    </script>
+    <h1>ex4</h1>
+    <div th:text="${param1}"></div>
+    <div th:text="${param2}"></div>
   </body>
 </html>
