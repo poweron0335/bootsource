@@ -25,7 +25,7 @@ import lombok.ToString;
 @Builder
 @Table(name = "mart_member")
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @SequenceGenerator(name = "mart_member_seq_gen", sequenceName = "mart_member_seq", allocationSize = 1)

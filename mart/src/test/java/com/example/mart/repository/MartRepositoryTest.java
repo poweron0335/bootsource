@@ -8,11 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.mart.entity.Delivery;
+import com.example.mart.entity.DeliveryStatus;
 import com.example.mart.entity.Item;
 import com.example.mart.entity.Member;
 import com.example.mart.entity.Order;
 import com.example.mart.entity.OrderItem;
 import com.example.mart.entity.OrderStatus;
+import com.example.mart.repositoty.DeliveryRepository;
 import com.example.mart.repositoty.ItemRepository;
 import com.example.mart.repositoty.MemberRepository;
 import com.example.mart.repositoty.OrderItemRepository;
@@ -34,6 +37,9 @@ public class MartRepositoryTest {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private DeliveryRepository deliveryRepository;
 
     @Test
     public void insertTest() {
@@ -122,12 +128,14 @@ public class MartRepositoryTest {
         // 관련있는 엔티티를 처음부터 안 가지고옴
         // Order : OrderItem
         // Order 를 기준으로 OrderItem 조회
-        Order order = orderRepository.findById(1L).get();
+        Order order = orderRepository.findById(2L).get();
         System.out.println(order); // 에러 발생 LazyInitializationException
 
         // Order 를 기준으로 OrderItem 조회
         // 1. @Transactional 2. FetchType 변경
         System.out.println(order.getOrderItems());
+        // // 배송지 조회
+        // System.out.println(order.getDelivery().getCity());
     }
 
     @Transactional
@@ -173,4 +181,45 @@ public class MartRepositoryTest {
         orderRepository.deleteById(1L);
 
     }
+
+    @Test
+    // 주문
+    public void orderInsertDeliveryTest() {
+        // 누가 주문하느냐
+        Member member = Member.builder().id(1L).build();
+        // 어떤 아이템
+        Item item = Item.builder().id(3L).build();
+
+        // 배송지 입력
+        Delivery delivery = Delivery.builder().city("city2").street("123-12").zipcode("11160")
+                .deliveryStatus(DeliveryStatus.READY)
+                .build();
+
+        deliveryRepository.save(delivery);
+        // 주문 + 주문 상품
+        // 부모가 되는 객체부터 만들어주기
+        Order order = Order.builder()
+                .delivery(delivery)
+                .build();
+        orderRepository.save(order);
+
+        OrderItem orderItem = OrderItem.builder()
+                .item(item)
+                .order(order)
+                .orderPrice(83500)
+                .count(2)
+                .build();
+        orderItemRepository.save(orderItem);
+    }
+
+    @Test
+    public void deliveryOrderGet() {
+        // 배송지를 통해서 관련있는 Order 가져오기
+
+        Delivery delivery = deliveryRepository.findById(1L).get();
+
+        System.out.println(delivery);
+        System.out.println("관련 주문 " + delivery.getOrder());
+    }
+
 }
