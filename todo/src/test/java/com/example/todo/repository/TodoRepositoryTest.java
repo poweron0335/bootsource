@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.todo.dto.TodoDto;
 import com.example.todo.entity.Todo;
 
 @SpringBootTest
@@ -82,6 +83,7 @@ public class TodoRepositoryTest {
         System.out.println(todo);
         todoRepository.delete(todo);
     }
+
 }
 
 // insert
