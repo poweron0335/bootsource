@@ -82,6 +82,13 @@
       crossorigin="anonymous"
     ></script>
     <!-- 페이지마다 적용되는 스크립트 -->
-    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="script">
+      <script>
+        const result = '[[${result}]]';
+        if (result) {
+          alert('성공했습니다.');
+        }
+      </script>
+    </th:block>
   </body>
 </html>

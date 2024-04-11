@@ -23,10 +23,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public List<TodoDto> getList() {
         // 미완료 목록
-        // completed 필드값이 false 인 list 데이터 출력
         List<Todo> list = todoRepository.findByCompleted(false);
         // Todo => TodoDto 변환
         // List<TodoDto> todoList = new ArrayList<>();
+        // list.forEach(todo -> todoList.add(entityToDto(todo)));
 
         List<TodoDto> todoList = list.stream().map(todo -> entityToDto(todo)).collect(Collectors.toList());
         return todoList;

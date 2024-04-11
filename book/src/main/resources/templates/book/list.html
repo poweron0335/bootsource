@@ -14,14 +14,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row"></th>
-          <td></td>
+        <tr th:each="dto : ${list}">
+          <th scope="row" th:text="${dto.id}"></th>
+          <td th:text="${dto.categoryName}"></td>
           <td>
-            <a class="text-decoration-none text-reset"></a>
+            <a class="text-decoration-none text-reset" th:text="${dto.title}" th:href="@{read(id=${dto.id})}"></a>
           </td>
-          <td></td>
-          <td></td>
+          <td th:text="${dto.writer}"></td>
+          <td th:text="${dto.publisherName}"></td>
         </tr>
       </tbody>
     </table>
