@@ -65,13 +65,16 @@ public class BoardRepositoryTest {
 
     @Test
     public void queryMethodTest() {
+
+        List<Board> list = boardRepository.findList();
+        System.out.println("findList " + list.size());
         // where b1_0.title=?
 
         // List<Board> list = boardRepository.findByTitle("Title");
         // System.out.println("findByTitle " + list.size());
-        // // where b1_0.title like ? escape '\'
-        // list = boardRepository.findByTitleLike("Title");
-        // System.out.println("findByTitleLike " + list.size());
+        // // // where b1_0.title like ? escape '\'
+        // list = boardRepository.findByWriter("user");
+        // System.out.println("findByWriter " + list.size());
         // // Title%
         // list = boardRepository.findByTitleStartingWith("Title");
         // System.out.println("findByTitleStartingWith " + list.size());
@@ -85,7 +88,8 @@ public class BoardRepositoryTest {
         // List<Board> list = boardRepository.findByTitleContainingOrContent("Title",
         // "Content");
         // System.out.println("findByTitleContainingOrContent " + list.size());
-        // list = boardRepository.findByTitleContainingOrContentContaining("Title",
+        // List<Board> list =
+        // boardRepository.findByTitleContainingOrContentContaining("Title",
         // "Content");
         // System.out.println("findByTitleContainingOrContentContaining " +
         // list.size());
@@ -95,10 +99,11 @@ public class BoardRepositoryTest {
         // System.out.println("findByTitleContainingAndIdGreaterThan " + list.size());
 
         // PageRequest.of(페이지번호, 게시물 수); => 페이지번호 0 부터 시작
-        Pageable pageable = PageRequest.of(0, 10);
+        // Pageable pageable = PageRequest.of(0, 10);
 
-        List<Board> list = boardRepository.findByIdGreaterThanOrderByIdDesc(0L, pageable);
+        // List<Board> list = boardRepository.findByIdGreaterThanOrderByIdDesc(0L,
+        // pageable);
 
-        list.forEach(System.out::println);
+        // list.forEach(System.out::println);
     }
 }
