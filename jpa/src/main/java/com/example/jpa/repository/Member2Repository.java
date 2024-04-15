@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.example.jpa.entity.Member2;
 import com.example.jpa.entity.Team2;
 
-public interface Member2Repository extends JpaRepository<Member2, Long> {
+public interface Member2Repository extends JpaRepository<Member2, Long>, QuerydslPredicateExecutor<Member2> {
 
     // jpql 사용 시(정해져있음)
     // 1. entity 타입 결과 -> List<Entity명>

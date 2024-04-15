@@ -2,13 +2,19 @@ package com.example.book.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.book.dto.BookDto;
+import com.example.book.dto.PageRequestDto;
+import com.example.book.dto.PageResultDto;
 import com.example.book.entity.Book;
 import com.example.book.entity.Category;
 import com.example.book.entity.Publisher;
@@ -28,16 +34,33 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
     private final PublisherRepository publisherRepository;
 
+    // 페이지 나누기 전
+    // @Override
+    // public List<BookDto> getList() {
+
+    // List<Book> list = bookRepository.findAll(Sort.by("id").descending());
+
+    // // List<BookDto> bookList = new ArrayList<>();
+    // // list.forEach(book -> bookList.add(entityToDto(book)));
+    // List<BookDto> bookDtos = list.stream().map(book ->
+    // entityToDto(book)).collect(Collectors.toList());
+
+    // return bookDtos;
+    // }
+
+    // 페이지 나누기 후
     @Override
-    public List<BookDto> getList() {
+    public PageResultDto<BookDto, Book> getList(PageRequestDto requestDto) {
+        // Sort 객체만 뽑아내면 됨
+        Pageable pageable = requestDto.getPageable(Sort.by("id").descending());
 
-        List<Book> list = bookRepository.findAll(Sort.by("id").descending());
-
-        // List<BookDto> bookList = new ArrayList<>();
-        // list.forEach(book -> bookList.add(entityToDto(book)));
-        List<BookDto> bookDtos = list.stream().map(book -> entityToDto(book)).collect(Collectors.toList());
-
-        return bookDtos;
+        // Page : 페이지 나누기에 필요한 메소드 제공
+        // == PageDto와 같은 역할
+        Page<Book> result = bookRepository
+                // BookRepository 에서 선언한 type 과 keyword 를 불러옴
+                .findAll(bookRepository.makePredicate(requestDto.getType(), requestDto.getKeyword()), pageable);
+        Function<Book, BookDto> fn = (enity -> entityToDto(enity));
+        return new PageResultDto<>(result, fn);
     }
 
     @Override
