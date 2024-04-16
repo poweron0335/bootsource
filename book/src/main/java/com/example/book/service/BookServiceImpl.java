@@ -34,14 +34,14 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
     private final PublisherRepository publisherRepository;
 
-    // 페이지 나누기 전
+    // // 페이지 나누기 전
     // @Override
     // public List<BookDto> getList() {
 
     // List<Book> list = bookRepository.findAll(Sort.by("id").descending());
 
-    // // List<BookDto> bookList = new ArrayList<>();
-    // // list.forEach(book -> bookList.add(entityToDto(book)));
+    // List<BookDto> bookList = new ArrayList<>();
+    // list.forEach(book -> bookList.add(entityToDto(book)));
     // List<BookDto> bookDtos = list.stream().map(book ->
     // entityToDto(book)).collect(Collectors.toList());
 
