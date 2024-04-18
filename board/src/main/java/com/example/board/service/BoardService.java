@@ -21,6 +21,8 @@ public interface BoardService {
 
     void removeWithReplied(Long bno);
 
+    Long boardCreate(BoardDto dto);
+
     // entity => dto
     public default BoardDto entityToDto(Board board, Member member, Long replyCount) {
         return BoardDto.builder()

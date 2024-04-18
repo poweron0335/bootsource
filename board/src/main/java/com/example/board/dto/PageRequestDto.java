@@ -17,6 +17,7 @@ public class PageRequestDto {
 
     private int size;
 
+    // 초기화 안 하면 null 임
     private String type;
 
     private String keyword;
@@ -26,6 +27,10 @@ public class PageRequestDto {
         this.page = 1;
         // size 값이 안 들어온다면 기본값이 10
         this.size = 10;
+
+        this.type = "";
+
+        this.keyword = "";
     }
 
     // 스프링 페이지 나누기 정보 저장 => Pageable
