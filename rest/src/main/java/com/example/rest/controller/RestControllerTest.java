@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // 컨트롤러
@@ -50,6 +54,38 @@ public class RestControllerTest {
         });
         return list;
 
+    }
+
+    // 데이터 + 상태코드(Http 상태코드 - 200, 500, 404)
+    // ResponseEntity 객체
+    // check?height=150&weight=45
+    @GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SampleDto> getCheck(double height, double weight) {
+
+        SampleDto dto = new SampleDto();
+        dto.setMno(1L);
+        dto.setFirstName(String.valueOf(height));
+        dto.setLastName(String.valueOf(weight));
+
+        if (height < 150) {
+            return new ResponseEntity<SampleDto>(dto, HttpStatus.BAD_REQUEST);
+
+        } else {
+            // 200 : OK
+            return new ResponseEntity<SampleDto>(dto, HttpStatus.OK);
+        }
+
+    }
+
+    // /product/bags/1234(rest 방식)
+    // /product?category=bags&pid=1234(basic 방식)
+    @GetMapping("/product/{cat}/{pid}")
+    public String[] getMethodName(@PathVariable("cat") String cat, @PathVariable("pid") String pid) {
+        return new String[] {
+
+                "category : " + cat,
+                "ProductId : " + pid
+        };
     }
 
 }

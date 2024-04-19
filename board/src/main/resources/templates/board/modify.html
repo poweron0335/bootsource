@@ -51,7 +51,7 @@
       </div>
       <input type="hidden" name="bno" th:value="${dto.bno}" />
     </form>
-    <form action="" method="post" id="actionForm">
+    <form th:action="@{delete}" method="post" id="actionForm">
       <input type="hidden" name="bno" th:value="${dto.bno}" />
       <input type="hidden" name="page" th:value="${requestDto.page}" />
       <input type="hidden" name="type" th:value="${requestDto.type}" />
