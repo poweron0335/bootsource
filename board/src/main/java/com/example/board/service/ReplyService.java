@@ -13,6 +13,8 @@ public interface ReplyService {
 
     Long create(ReplyDto dto);
 
+    Long update(ReplyDto dto);
+
     void remove(Long rno);
 
     ReplyDto getReply(Long rno);
