@@ -1,37 +1,51 @@
-package com.example.club.dto;
+// package com.example.club.dto;
 
-import java.util.Collection;
+// import java.util.Collection;
+// import java.util.Map;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+// import org.springframework.security.core.GrantedAuthority;
+// import org.springframework.security.core.userdetails.User;
+// import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+// import lombok.Getter;
+// import lombok.Setter;
+// import lombok.ToString;
 
-@Setter
-@Getter
-@ToString
-public class ClubAuthMemberDto extends User {
+// @Setter
+// @Getter
+// @ToString
+// public class ClubAuthMemberDto extends User implements OAuth2User {
 
-    // db에서 인증된 정보를 담을 객체
+// // db에서 인증된 정보를 담을 객체
 
-    private String email;
-    private String name;
-    private boolean fromSocial;
+// private String email;
+// private String password;
+// private String name;
+// private boolean fromSocial;
 
-    // ClubAuthMemberDto 클래스의 생성자를 정의한다.
-    public ClubAuthMemberDto(String username, String password, boolean fromSocial,
-            Collection<? extends GrantedAuthority> authorities) {
-        // User 클래스의 생성자를 호출하여 username, password, authorities를 전달
-        super(username, password, authorities);
+// // 소셜 로그인에서 넘어오는 값을 담는 객체
+// private Map<String, Object> attr;
 
-        // username을 이용하여 email 필드를 초기화합니다.
-        this.email = username;
+// public ClubAuthMemberDto(String username, String password, boolean
+// fromSocial,
+// Collection<? extends GrantedAuthority> authorities) {
+// super(username, password, authorities);
+// this.email = username;
+// this.fromSocial = fromSocial;
+// this.password = password;
+// }
 
-        // fromSocial을 이용하여 fromSocial 필드를 초기화합니다.
-        this.fromSocial = fromSocial;
+// public ClubAuthMemberDto(String username, String password, boolean
+// fromSocial,
+// Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr)
+// {
+// this(username, password, fromSocial, authorities);
+// this.attr = attr;
+// }
 
-    }
+// @Override
+// public Map<String, Object> getAttributes() {
+// return this.attr;
+// }
 
-}
+// }

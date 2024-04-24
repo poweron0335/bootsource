@@ -13,32 +13,37 @@ public interface ReplyService {
 
     Long create(ReplyDto dto);
 
-    Long update(ReplyDto dto);
-
     void remove(Long rno);
 
     ReplyDto getReply(Long rno);
 
+    Long update(ReplyDto dto);
+
     // entity => dto
     public default ReplyDto entityToDto(Reply reply) {
+
         return ReplyDto.builder()
                 .rno(reply.getRno())
-                .text(reply.getText())
-                .replyer(reply.getReplyer())
                 .bno(reply.getBoard().getBno())
+                .writerEmail(reply.getReplyer().getEmail())
+                .writerName(reply.getReplyer().getName())
+                .text(reply.getText())
                 .createdDate(reply.getCreatedDate())
                 .lastModifiedDate(reply.getLastModifiedDate())
                 .build();
     }
 
+    // dto => entity
     public default Reply dtoToEntity(ReplyDto dto) {
-        // 찾아오기
+
         Board board = Board.builder().bno(dto.getBno()).build();
+        Member member = Member.builder().email(dto.getWriterEmail()).build();
+
         return Reply.builder()
                 .rno(dto.getRno())
-                .text(dto.getText())
-                .replyer(dto.getReplyer())
                 .board(board)
+                .replyer(member)
+                .text(dto.getText())
                 .build();
     }
 }

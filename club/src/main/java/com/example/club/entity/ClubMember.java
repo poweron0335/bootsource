@@ -11,17 +11,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@ToString
-@Setter
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 public class ClubMember extends BaseEntity {
 

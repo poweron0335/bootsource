@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.board.entity.Board;
+import com.example.board.entity.Member;
 import com.example.board.entity.Reply;
 
 import jakarta.transaction.Transactional;
@@ -24,13 +25,13 @@ public class ReplyRepositoryTest {
             long bno = (long) (Math.random() * 100) + 1;
 
             Board board = Board.builder().bno(bno).build();
+            Member member = Member.builder().email("user11@naver.com").build();
 
             Reply reply = Reply.builder()
-                    .text("밍reply" + i)
-                    .replyer("밍guest" + i)
+                    .text("Reply..." + i)
+                    .replyer(member)
                     .board(board)
                     .build();
-
             replyRepository.save(reply);
         });
     }
@@ -39,7 +40,7 @@ public class ReplyRepositoryTest {
     @Test
     public void getRow() {
 
-        Reply reply = replyRepository.findById(2L).get();
+        Reply reply = replyRepository.findById(40L).get();
         System.out.println(reply); // Reply(rno=2, text=밍reply2, replyer=밍guest2)
 
         // FetchType.LAZY 이기 때문에 reply 부모 게시물은 안 갖고옴

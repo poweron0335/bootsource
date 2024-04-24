@@ -16,7 +16,6 @@ import com.example.board.dto.PageRequestDto;
 import com.example.board.dto.PageResultDto;
 import com.example.board.entity.Board;
 import com.example.board.entity.Member;
-import com.example.board.entity.Reply;
 import com.example.board.repository.BoardRepository;
 import com.example.board.repository.MemberRepository;
 import com.example.board.repository.ReplyRepository;
@@ -29,19 +28,17 @@ import lombok.RequiredArgsConstructor;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+
     private final ReplyRepository replyRepository;
     private final MemberRepository memberRepository;
 
     @Override
     public PageResultDto<BoardDto, Object[]> getList(PageRequestDto requestDto) {
 
-        Pageable pageable = PageRequest.of(0, 10);
         Page<Object[]> result = boardRepository.list(requestDto.getType(), requestDto.getKeyword(),
                 requestDto.getPageable(Sort.by("bno").descending()));
-        // List<Object[]> result = boardRepository.list();
 
-        Function<Object[], BoardDto> fn = (entity -> entityToDto((Board) entity[0],
-                (Member) entity[1],
+        Function<Object[], BoardDto> fn = (entity -> entityToDto((Board) entity[0], (Member) entity[1],
                 (Long) entity[2]));
         // return result.stream().map(fn).collect(Collectors.toList());
         return new PageResultDto<>(result, fn);
@@ -49,48 +46,31 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDto getRow(Long bno) {
-
-        Object[] entity = boardRepository.getRow(bno);
-
-        return entityToDto((Board) entity[0], (Member) entity[1],
-                (Long) entity[2]);
-
+        Object[] row = boardRepository.getRow(bno);
+        return entityToDto((Board) row[0], (Member) row[1], (Long) row[2]);
     }
 
     @Override
-    public Long boardUpdate(BoardDto dto) {
+    public void modify(BoardDto dto) {
 
         Board board = boardRepository.findById(dto.getBno()).get();
-
         board.setTitle(dto.getTitle());
         board.setContent(dto.getContent());
 
-        Board updateBoard = boardRepository.save(board);
-
-        return updateBoard.getBno();
-
+        boardRepository.save(board);
     }
 
     @Transactional
     @Override
-    public void removeWithReplied(Long bno) {
-
+    public void removeWithReplies(Long bno) {
+        // 자식(댓글) 삭제
         replyRepository.deleteByBno(bno);
-
+        // 부모(원본글) 삭제
         boardRepository.deleteById(bno);
     }
 
     @Override
-    public Long boardCreate(BoardDto dto) {
-
-        // Member member =
-        // Member.builder().name(dto.getWriterName()).email(dto.getWriterEmail()).build();
-        // memberRepository.save(member);
-
-        // Board board = dtoToEntity(dto);
-
-        // Board newBoard = boardRepository.save(board);
-        // return newBoard.getBno();
+    public Long create(BoardDto dto) {
 
         Optional<Member> member = memberRepository.findById(dto.getWriterEmail());
 
@@ -100,9 +80,11 @@ public class BoardServiceImpl implements BoardService {
                     .content(dto.getContent())
                     .writer(member.get())
                     .build();
-            boardRepository.save(entity);
+            entity = boardRepository.save(entity);
             return entity.getBno();
         }
         return null;
+
     }
+
 }

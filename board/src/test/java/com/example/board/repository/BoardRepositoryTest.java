@@ -34,8 +34,8 @@ public class BoardRepositoryTest {
             Member member = Member.builder().email("user" + i + "@gmail.com").build();
 
             Board board = Board.builder()
-                    .title("밍title" + i)
-                    .content("밍content" + i)
+                    .title("title.." + i)
+                    .content("content.." + i)
                     .writer(member)
                     .build();
             boardRepository.save(board);

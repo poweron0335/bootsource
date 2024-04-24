@@ -26,7 +26,6 @@ public class BoardDto {
     @NotBlank(message = "내용을 입력하세요")
     private String content;
 
-    @NotBlank(message = "이메일을 입력해주세요")
     private String writerEmail; // 작성자 아이디(email)
 
     private String writerName; // 작성자 이름(name)

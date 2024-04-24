@@ -3,13 +3,13 @@
     <h2>
       Board List Page
       <span>
-        <a th:href="@{create(page=${requestDto.page}, type=${requestDto.type}, keyword=${requestDto.keyword})}">
+        <a th:href="@{create(page=1,type=${requestDto.type},keyword=${requestDto.keyword})}">
           <button class="btn btn-outline-primary">REGISTER</button>
         </a>
       </span>
     </h2>
     <!-- 검색 -->
-    <form class="d-flex" role="search" id="searchForm">
+    <form class="mt-4" role="search" id="searchForm">
       <!-- 검색 후 결과 페이지는 1로 보여주기 -->
       <input type="hidden" name="page" value="1" class="form-control" />
       <div class="input-group mb-3">
@@ -23,20 +23,12 @@
             <option value="tcw" th:selected="${requestDto.type == 'tcw'}">제목 + 내용 + 작성자</option>
           </select>
         </div>
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          name="keyword"
-          id="keyword"
-          th:value="${requestDto.keyword}"
-        />
+        <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword" th:value="${requestDto.keyword}" />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </div>
     </form>
 
-    <table class="table table-hover mt-2">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">Bno</th>
@@ -50,35 +42,33 @@
           <th scope="row" th:text="${dto.bno}"></th>
           <td>
             <a
-              th:href="@{read(bno=${dto.bno}, page=${requestDto.page}, type=${requestDto.type}, keyword=${requestDto.keyword})}"
-              th:text="${dto.title}  + ' --- [' + ${dto.replyCount} +']' "
+              th:href="@{read(bno=${dto.bno},page=${requestDto.page},type=${requestDto.type},keyword=${requestDto.keyword})}"
+              th:text=" ${dto.title} + ' --- [' + ${dto.replyCount} + ']' "
               class="text-decoration-none text-reset"
             ></a>
           </td>
           <td th:text="${dto.writerEmail}"></td>
-          <td>
-            <!-- 작성날짜 -->
-            <small th:text="${#temporals.format(dto.createdDate, 'yyyy-MM-dd')}"></small>
-          </td>
+          <td th:text="${#temporals.format(dto.createdDate, 'yyyy-MM-dd')}"></td>
         </tr>
       </tbody>
     </table>
-    <!-- 페이지 나누기 디자인 만들 때 기본 디자인에서 1번만 남긴다. -->
     <nav aria-label="...">
       <ul class="pagination justify-content-center">
         <li class="page-item" th:if="${result.prev}">
-          <a class="page-link" th:href="@{list(page=${result.start - 1}, type=${requestDto.type}, keyword=${requestDto.keyword})}">Previous</a>
+          <a class="page-link" th:href="@{list(page=${result.start-1},type=${requestDto.type},keyword=${requestDto.keyword})}">Previous</a>
         </li>
-        <li th:class="'page-item ' + ${result.page == page? 'active' : ''} " th:each="page : ${result.pageList}">
-          <a class="page-link" th:href="@{list(page=${page}, type=${requestDto.type}, keyword=${requestDto.keyword})}" href="#" th:text="${page}"></a>
+
+        <li th:class=" 'page-item ' + ${result.page == page? 'active':''}  " th:each="page : ${result.pageList}">
+          <a class="page-link" th:href="@{list(page=${page},type=${requestDto.type},keyword=${requestDto.keyword})}" th:text="${page}"></a>
         </li>
+
         <li class="page-item" th:if="${result.next}">
-          <a class="page-link" th:href="@{list(page=${result.end + 1}, type=${requestDto.type}, keyword=${requestDto.keyword})}" href="#">Next</a>
+          <a class="page-link" th:href="@{list(page=${result.end+1},type=${requestDto.type},keyword=${requestDto.keyword})}">Next</a>
         </li>
       </ul>
     </nav>
   </div>
-  <th:block layout:fragment="script">
+  <block layout:fragment="script">
     <script th:src="@{/js/search.js}"></script>
-  </th:block>
+  </block>
 </html>

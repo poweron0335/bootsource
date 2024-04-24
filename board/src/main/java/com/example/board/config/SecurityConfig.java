@@ -1,4 +1,4 @@
-package com.example.club.config;
+package com.example.board.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/static/**", "/css/*", "/assets/*", "/img/*", "/js/*").permitAll()
+                .requestMatchers("/board/read").permitAll()
+                .requestMatchers("/board/modify").authenticated()
                 .anyRequest().permitAll())
                 .formLogin(login -> login.loginPage("/member/login").permitAll())
                 .logout(logout -> logout

@@ -17,8 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-				<!-- querydsl -->
-	<!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
@@ -31,11 +29,21 @@
 			<artifactId>querydsl-apt</artifactId>
 			<version>5.0.0</version>
 			<classifier>jakarta</classifier>
-		</dependency>
+		</dependency>	
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>			
+		</dependency>	
+		<!-- thymeleaf 에서 스프링시큐리티 태그 사용 -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>			
+		</dependency>	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>

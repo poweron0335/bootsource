@@ -31,7 +31,8 @@ public class Reply extends BaseEntity {
 
     private String text; // 댓글내용
 
-    private String replyer; // 댓글작성자
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member replyer; // 댓글작성자
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;

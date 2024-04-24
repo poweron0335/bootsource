@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface ClubMemberRepository extends JpaRepository<ClubMember, String> {
 
-    // 회원 찾기(email, social 회원 여부)
+    // 회원 찾기(email,social 회원여부)
     @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
-    @Query("select m from ClubMember m where m.email =:email and m.fromSocial =:social")
+    @Query("select m from ClubMember m where m.email = :email and m.fromSocial=:social")
     Optional<ClubMember> findByEmailAndFromSocial(String email, boolean social);
 }
