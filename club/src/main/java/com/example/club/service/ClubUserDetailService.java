@@ -51,16 +51,16 @@
 // log.info("=======================");
 
 // entity ==> dto
-ClubAuthMemberDto clubAuthMemberDto = new
-ClubAuthMemberDto(clubMember.getEmail(),
-clubMember.getPassword(), clubMember.isFromSocial(),
-clubMember.getRoleSet().stream().map(role -> new
-SimpleGrantedAuthority("ROLE_" + role.name()))
-.collect(Collectors.toSet()));
-clubAuthMemberDto.setName(clubMember.getName());
+// ClubAuthMemberDto clubAuthMemberDto = new
+// ClubAuthMemberDto(clubMember.getEmail(),
+// clubMember.getPassword(), clubMember.isFromSocial(),
+// clubMember.getRoleSet().stream().map(role -> new
+// SimpleGrantedAuthority("ROLE_" + role.name()))
+// .collect(Collectors.toSet()));
+// clubAuthMemberDto.setName(clubMember.getName());
 
-return clubAuthMemberDto;
-}
+// return clubAuthMemberDto;
+// }
 
 // @Override
 // public String register(ClubMemberDto member) {
