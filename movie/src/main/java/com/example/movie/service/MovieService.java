@@ -79,17 +79,21 @@ public interface MovieService {
         // }
 
         // }
+        // movieImageDtos 리스트가 Null 이 아니고 비어있지 않으면 실행
         if (movieImageDtos != null && movieImageDtos.size() > 0) {
+            // movieImageDtos 리스트의 각 요소를 처리하기 위해 스트림 사용
             List<MovieImage> movieImages = movieImageDtos.stream().map(mDto -> {
+                // 각 MovieImageDto 객체를 MovieImage 객체로 변혼
                 MovieImage movieImage = MovieImage.builder()
-                        .imgName(mDto.getImgName())
-                        .uuid(mDto.getUuid())
-                        .path(mDto.getPath())
-                        .movie(movie)
-                        .build();
-                return movieImage;
+                        .imgName(mDto.getImgName()) // MovieImage의 imgName 필드를 설정
+                        .uuid(mDto.getUuid()) // MovieImage 의 uuid 필드를 설정
+                        .path(mDto.getPath()) // MovieImage 의 path 필드를 설정
+                        .movie(movie) // 현재 movie 객체를 MovieImage의 Movie 필드에 설정
+                        .build(); // MovieImage 객체를 생성
+                return movieImage; // 변환된 MovieImage 객체를 반환
             }).collect(Collectors.toList());
 
+            // 반환된 MovieImage 객체들을 entityMap 에 추가
             entityMap.put("imgList", movieImages);
         }
         // 변환이 끝난 entity list 를 Map 에 담기 : put()
