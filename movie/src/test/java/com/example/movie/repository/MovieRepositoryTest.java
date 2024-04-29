@@ -1,6 +1,7 @@
 package com.example.movie.repository;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -18,18 +19,17 @@ import com.example.movie.entity.Movie;
 import com.example.movie.entity.MovieImage;
 import com.example.movie.entity.Review;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 public class MovieRepositoryTest {
 
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
     private MovieImageRepository movieImageRepository;
-
     @Autowired
     private MemberRepository memberRepository;
-
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -39,7 +39,6 @@ public class MovieRepositoryTest {
     @Test
     public void movieInsertTest() {
         // 영화 / 영화이미지 샘플 데이터 추가
-
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Movie movie = Movie.builder()
                     .title("Movie" + i)
@@ -54,7 +53,6 @@ public class MovieRepositoryTest {
                         .movie(movie)
                         .imgName("img" + j + ".jpg")
                         .build();
-
                 movieImageRepository.save(mImage);
             }
         });
@@ -63,7 +61,6 @@ public class MovieRepositoryTest {
     @Test
     public void memberInsertTest() {
         // 멤버 샘플 데이터 추가
-
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member member = Member.builder()
                     .email("mem" + i + "@naver.com")
@@ -71,9 +68,7 @@ public class MovieRepositoryTest {
                     .memberRole(MemberRole.MEMBER)
                     .nickname("reviewer" + i)
                     .build();
-
             memberRepository.save(member);
-
         });
     }
 
@@ -92,10 +87,9 @@ public class MovieRepositoryTest {
                     .movie(movie)
                     .member(member)
                     .grade((int) (Math.random() * 5) + 1)
-                    .text("이 영화에 대한.. " + i)
+                    .text("이 영화에 대한.." + i)
                     .build();
             reviewRepository.save(review);
-
         });
     }
 
@@ -123,4 +117,27 @@ public class MovieRepositoryTest {
         }
     }
 
+    @Test
+    public void movieGetTest() {
+        List<Object[]> result = movieImageRepository.getMovieRow(3L);
+
+        for (Object[] objects : result) {
+            System.out.println(Arrays.toString(objects));
+        }
+    }
+
+    @Transactional
+    @Test
+    public void movieRemoveTest() {
+        Movie movie = Movie.builder().mno(1L).build();
+
+        // 이미지 삭제
+        movieImageRepository.deleteByMovie(movie);
+
+        // 리뷰 삭제
+        reviewRepository.deleteByMovie(movie);
+
+        // 영화 삭제
+        movieRepository.delete(movie);
+    }
 }
