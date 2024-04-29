@@ -1,5 +1,7 @@
 package com.example.movie.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -19,6 +21,8 @@ public interface MovieService {
     MovieDto getRow(Long mno);
 
     void movieRemove(Long mno);
+
+    Long movieInsert(MovieDto movieDto);
 
     // [Movie(mno=99, title=Movie99), MovieImage(inum=296,
     // uuid=98fc2592-6d21-4015-a9fe-65a21ec35236, imgName=img0.jpg, path=null), 1,
@@ -49,6 +53,47 @@ public interface MovieService {
 
     // dto => entity
     public default Map<String, Object> dtoToEntity(MovieDto dto) {
-        return null;
+
+        // 생성된 movie entity 를 Map 에 담기 : put()
+        Map<String, Object> entityMap = new HashMap<>();
+
+        // Movie Entity 생성
+        Movie movie = Movie.builder()
+                .mno(dto.getMno())
+                .title(dto.getTitle())
+                .build();
+        entityMap.put("movie", movie);
+        // List<MovieIMageDto> movieImageDtos 를
+        // List<Movie> 로 변환
+        List<MovieImageDto> movieImageDtos = dto.getMovieImageDtos();
+        // List<MovieImage> movieImages = new ArrayList<>();
+        // if (movieImageDtos != null && movieImageDtos.size() > 0) {
+        // for (MovieImageDto mDto : movieImageDtos) {
+        // MovieImage movieImage = MovieImage.builder()
+        // .imgName(mDto.getImgName())
+        // .uuid(mDto.getUuid())
+        // .path(mDto.getPath())
+        // .build();
+
+        // movieImages.add(movieImage);
+        // }
+
+        // }
+        if (movieImageDtos != null && movieImageDtos.size() > 0) {
+            List<MovieImage> movieImages = movieImageDtos.stream().map(mDto -> {
+                MovieImage movieImage = MovieImage.builder()
+                        .imgName(mDto.getImgName())
+                        .uuid(mDto.getUuid())
+                        .path(mDto.getPath())
+                        .movie(movie)
+                        .build();
+                return movieImage;
+            }).collect(Collectors.toList());
+
+            entityMap.put("imgList", movieImages);
+        }
+        // 변환이 끝난 entity list 를 Map 에 담기 : put()
+        return entityMap;
     }
+
 }

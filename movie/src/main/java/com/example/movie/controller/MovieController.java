@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.movie.dto.MovieDto;
 import com.example.movie.dto.PageRequestDto;
@@ -53,6 +54,20 @@ public class MovieController {
     @GetMapping("/register")
     public void getMethodName() {
         log.info("영화 등록 폼 요청 ");
+
+    }
+
+    @PostMapping("/register")
+    public String postRegister(MovieDto movieDto, RedirectAttributes rttr) {
+        log.info("영화 등록 {} ", movieDto);
+
+        // 서비스 호출
+        Long mno = service.movieInsert(movieDto);
+
+        // mno 넘기기
+        rttr.addFlashAttribute("msg", mno);
+
+        return "redirect:/movie/list";
 
     }
 

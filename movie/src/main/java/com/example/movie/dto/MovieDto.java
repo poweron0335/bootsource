@@ -31,4 +31,5 @@ public class MovieDto {
     // 영화이미지 리스트
     @Builder.Default
     private List<MovieImageDto> movieImageDtos = new ArrayList<>();
+
 }
