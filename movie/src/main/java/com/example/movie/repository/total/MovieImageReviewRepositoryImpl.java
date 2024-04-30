@@ -15,6 +15,7 @@ import com.example.movie.entity.MovieImage;
 import com.example.movie.entity.QMovie;
 import com.example.movie.entity.QMovieImage;
 import com.example.movie.entity.QReview;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -32,7 +33,7 @@ public class MovieImageReviewRepositoryImpl extends QuerydslRepositorySupport im
     }
 
     @Override
-    public Page<Object[]> getTotalList(Pageable pageable) {
+    public Page<Object[]> getTotalList(String type, String keyword, Pageable pageable) {
         log.info("==== querydsl getTotalList ====");
 
         // Q 클래스 가져오기
@@ -52,6 +53,19 @@ public class MovieImageReviewRepositoryImpl extends QuerydslRepositorySupport im
                 .where(movieImage.inum
                         .in(JPAExpressions.select(movieImage.inum.min()).from(movieImage).groupBy(movieImage.movie)));
         // .orderBy(movie.mno.desc());
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(movie.mno.gt(0L));
+        // 검색 조건
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if (type.contains("t")) {
+            conditionBuilder.or(movie.title.contains(keyword));
+        }
+        builder.and(conditionBuilder);
+
+        tuple.where(builder);
 
         Sort sort = pageable.getSort();
         sort.stream().forEach(order -> {

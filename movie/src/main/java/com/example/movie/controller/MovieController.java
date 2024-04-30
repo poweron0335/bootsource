@@ -43,22 +43,44 @@ public class MovieController {
         model.addAttribute("dto", service.getRow(mno));
     }
 
+    @PostMapping("/modify")
+    public String postModify(MovieDto movieDto, @ModelAttribute("requestDto") PageRequestDto pageRequestDto,
+            RedirectAttributes rttr) {
+        log.info("movie 수정 요청 {}", movieDto);
+
+        Long mno = service.movieUpdate(movieDto);
+
+        rttr.addAttribute("mno", mno);
+        rttr.addAttribute("page", pageRequestDto.getPage());
+        rttr.addAttribute("type", pageRequestDto.getType());
+        rttr.addAttribute("keyword", pageRequestDto.getKeyword());
+        rttr.addAttribute("size", pageRequestDto.getSize());
+
+        return "redirect:/movie/read";
+    }
+
     @PostMapping("/remove")
-    public String postRemove(Long mno) {
+    public String postRemove(Long mno, @ModelAttribute("requestDto") PageRequestDto pageRequestDto,
+            RedirectAttributes rttr) {
 
         service.movieRemove(mno);
+        rttr.addAttribute("page", pageRequestDto.getPage());
+        rttr.addAttribute("type", pageRequestDto.getType());
+        rttr.addAttribute("keyword", pageRequestDto.getKeyword());
+        rttr.addAttribute("size", pageRequestDto.getSize());
 
         return "redirect:/movie/list";
     }
 
     @GetMapping("/register")
-    public void getMethodName() {
+    public void getMethodName(@ModelAttribute("requestDto") PageRequestDto pageRequestDto) {
         log.info("영화 등록 폼 요청 ");
 
     }
 
     @PostMapping("/register")
-    public String postRegister(MovieDto movieDto, RedirectAttributes rttr) {
+    public String postRegister(MovieDto movieDto, @ModelAttribute("requestDto") PageRequestDto pageRequestDto,
+            RedirectAttributes rttr) {
         log.info("영화 등록 {} ", movieDto);
 
         // 서비스 호출
@@ -66,6 +88,10 @@ public class MovieController {
 
         // mno 넘기기
         rttr.addFlashAttribute("msg", mno);
+        rttr.addAttribute("page", pageRequestDto.getPage());
+        rttr.addAttribute("type", pageRequestDto.getType());
+        rttr.addAttribute("keyword", pageRequestDto.getKeyword());
+        rttr.addAttribute("size", pageRequestDto.getSize());
 
         return "redirect:/movie/list";
 
