@@ -31,4 +31,12 @@ public class ReviewServiceIml implements ReviewService {
         return reviews.stream().map(fn).collect(Collectors.toList());
     }
 
+    @Override
+    public Long addReview(ReviewDto reviewDto) {
+
+        // dto -> entityDto
+        Review review = dtoToEntity(reviewDto);
+        return repository.save((review)).getReviewNo();
+    }
+
 }
