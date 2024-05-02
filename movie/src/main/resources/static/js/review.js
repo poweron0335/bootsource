@@ -13,6 +13,9 @@ const reviewsLoaded = () => {
     .then((data) => {
       console.log(data);
 
+      // 리뷰 총 개수 변경
+      document.querySelector('.review-cnt').innerHTML = data.length;
+
       let result = '';
       data.forEach((review) => {
         result += `<div class="d-flex justify-content-between my-2 border-bottom py-2 review-row" data-rno=${review.mno}>`;
@@ -42,6 +45,7 @@ reviewForm.addEventListener('submit', (e) => {
 
   const text = reviewForm.querySelector('#text');
   const mid = document.querySelector('#mid');
+  const nickname = document.querySelector('#nickname');
 
   console.log(text);
   console.log(mid);
@@ -64,13 +68,14 @@ reviewForm.addEventListener('submit', (e) => {
   })
     .then((response) => response.text())
     .then((data) => {
+      nickname.value = '';
+      text.value = '';
+      grade = 0;
+
       if (data) {
         alert(data + ' 번 리뷰 등록');
-
-        mid.value = '';
-        text.value = '';
-
-        reviewsLoaded();
       }
+
+      reviewsLoaded();
     });
 });

@@ -184,9 +184,11 @@
 
         // 리뷰 개수가 존재한다면 reviewList 클래스명 hidden 제거
         const reviewCnt = parseInt('[[${dto.reviewCnt}]]');
-        if(reviewCnt > 0) {
+        if(reviewCnt >= 0) {
           reviewList.classList.remove("hidden");
         }
+
+
 
       </script>
       <script th:src="@{/js/review.js}"></script>

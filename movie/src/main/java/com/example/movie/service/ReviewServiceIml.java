@@ -39,4 +39,9 @@ public class ReviewServiceIml implements ReviewService {
         return repository.save((review)).getReviewNo();
     }
 
+    @Override
+    public void removeReview(Long reviewNo) {
+        repository.deleteById(reviewNo);
+    }
+
 }
