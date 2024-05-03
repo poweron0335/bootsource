@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .requestMatchers("/movie/list", "/movie/read").permitAll()
                 .requestMatchers("/upload/display").permitAll()
                 .requestMatchers("/reviews/**").permitAll()
+                .requestMatchers("/member/register").permitAll()
                 .anyRequest().authenticated());
         // login 페이지는 /member/login 경로요청 해야함
         // login 성공 후 이동경로 시작했던 곳으로 가는 게 기본
