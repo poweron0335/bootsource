@@ -1,6 +1,7 @@
 package com.example.movie.service;
 
 import com.example.movie.dto.MemberDto;
+import com.example.movie.dto.PasswordChangeDto;
 import com.example.movie.entity.Member;
 
 public interface MovieUserService {
@@ -11,7 +12,7 @@ public interface MovieUserService {
     void nickNameUpdate(MemberDto upMemberDto);
 
     // 비밀번호 수정
-    void passwordUpdate();
+    void passwordUpdate(PasswordChangeDto passwordChangeDto) throws IllegalStateException;
 
     // dto => entity
 
@@ -36,8 +37,6 @@ public interface MovieUserService {
                 .nickname(member.getNickname())
                 .password(member.getPassword())
                 .mid(member.getMid())
-                .createdDate(member.getCreatedDate())
-                .lastModifiedDate(member.getLastModifiedDate())
                 .role(member.getMemberRole())
                 .build();
     }

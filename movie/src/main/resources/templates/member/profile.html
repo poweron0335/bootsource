@@ -23,6 +23,7 @@
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   type="text"
                   readonly
+                  th:value="${#authentication.name}"
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -32,12 +33,13 @@
                   type="text"
                   name="nickname"
                   readonly
+                  th:value="${#authentication.principal.memberDto.nickname}"
                 />
               </label>
 
               <!-- You should use a button here, as the anchor is only used for the example  -->
               <p class="mt-4">
-                <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"> 닉네임 / 비밀번호 수정 </a>
+                <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline" th:href="@{edit}"> 닉네임 / 비밀번호 수정 </a>
               </p>
             </form>
           </div>
