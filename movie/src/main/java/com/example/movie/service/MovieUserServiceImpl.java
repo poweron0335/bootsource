@@ -9,11 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.movie.constant.MemberRole;
 import com.example.movie.dto.AuthMemberDto;
 import com.example.movie.dto.MemberDto;
 import com.example.movie.dto.PasswordChangeDto;
 import com.example.movie.entity.Member;
 import com.example.movie.repository.MemberRepository;
+import com.example.movie.repository.ReviewRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class MovieUserServiceImpl implements UserDetailsService, MovieUserServic
     private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ReviewRepository reviewRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -58,8 +62,27 @@ public class MovieUserServiceImpl implements UserDetailsService, MovieUserServic
 
     @Override
     public String register(MemberDto insertDto) throws IllegalStateException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'register'");
+
+        // 중복 이메일 확인
+        validateDuplicateEmail(insertDto.getEmail());
+
+        // 비밀번호 암호화
+        insertDto.setPassword(passwordEncoder.encode(insertDto.getPassword()));
+        // 권한 부여
+        insertDto.setRole(MemberRole.MEMBER);
+
+        Member member = memberRepository.save(dtoToEntity(insertDto));
+        return member.getEmail();
+
+    }
+
+    // 중복 이메일 검사
+    private void validateDuplicateEmail(String email) throws IllegalStateException {
+        Optional<Member> result = memberRepository.findByEmail(email);
+
+        if (result.isPresent()) {
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        }
     }
 
     @Transactional
@@ -90,6 +113,22 @@ public class MovieUserServiceImpl implements UserDetailsService, MovieUserServic
             member.setPassword(passwordEncoder.encode(passwordChangeDto.getNewPassword()));
             memberRepository.save(member);
         }
+    }
+
+    @Override
+    @Transactional
+    public void leave(MemberDto leaveMemberDto) throws IllegalStateException {
+
+        // 이메일과 비밀번호 일치 시
+        Member member = memberRepository.findByEmail(leaveMemberDto.getEmail()).get();
+
+        if (!passwordEncoder.matches(leaveMemberDto.getPassword(), member.getPassword())) {
+            throw new IllegalStateException("이메일과 비밀번호를 확인하세요");
+        } else {
+            reviewRepository.deleteByMember(member);
+            memberRepository.delete(member);
+        }
+
     }
 
 }

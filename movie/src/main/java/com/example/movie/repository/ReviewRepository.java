@@ -25,4 +25,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @EntityGraph(attributePaths = { "member" }, type = EntityGraphType.FETCH)
     List<Review> findByMovie(Movie movie);
 
+    // @Query(value = "delete from Review r where r.member = :member", nativeQuery =
+    // true)
+
+    // 멤버를 기준으로 삭제
+    // Review 엔티티에 member 가 들어가 있기 때문에 member 호출
+    @Modifying
+    @Query("delete from Review r where r.member = :member")
+    void deleteByMember(Member member); // review_no 를 기준으로 동작함(리뷰 작성이 많은 사람일 수록 delete 구문 여러번 실행됨)
 }

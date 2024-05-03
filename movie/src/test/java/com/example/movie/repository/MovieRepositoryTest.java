@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 
 import com.example.movie.constant.MemberRole;
 import com.example.movie.dto.PageRequestDto;
@@ -169,5 +170,19 @@ public class MovieRepositoryTest {
             System.out.println(review.getMember().getEmail());
             System.out.println(review.getMember().getNickname());
         });
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void deleteByMemberTest() {
+
+        // 회원탈퇴
+        // 리뷰삭제
+        Member member = Member.builder().mid(10L).build();
+        reviewRepository.deleteByMember(member);
+
+        // 회원삭제
+        memberRepository.delete(member);
     }
 }
