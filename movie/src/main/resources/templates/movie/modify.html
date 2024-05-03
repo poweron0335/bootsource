@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
-  <th:block layout:fragment="css"> 
-    <link rel="stylesheet" th:href="@{/css/upload.css}" >
+  <th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">
   </th:block>
   <div layout:fragment="content" class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"></h2>
@@ -71,7 +71,8 @@
       <div class="uploadResult mt-4">
         <!-- 기존에 이미 있는 포스터 보여주기 + 포스터 수정-->
         <ul>
-          <li th:each="image : ${dto.movieImageDtos}" data-bs-toggle="modal" data-bs-target="#imgModal" th:attr="data-file=${image.getImageURL()}, data-name =${image.getImgName()}, data-path =${image.getPath()}, data-uuid=${image.getUuid()}">
+          <li th:each="image : ${dto.movieImageDtos}" data-bs-toggle="modal" data-bs-target="#imgModal" 
+          th:attr="data-file=${image.getImageURL()}, data-name=${image.getImgName()}, data-path=${image.getPath()}, data-uuid=${image.getUuid()}">
             <div>
               <a href="">
                 <img class="block" th:if="${image.path != null}" th:src="|/upload/display?fileName=${image.getThumbImageURL()}|" />
@@ -89,14 +90,13 @@
       <form method="post" id="actionForm" th:action="@{remove}">
         <input type="hidden" name="mno" th:value="${dto.mno}" />
         <input type="hidden" name="page" th:value="${requestDto.page}" />
-        <input type="hidden" name="type" th:value="${requestDto.type}"/>
-        <input type="hidden" name="keyword" th:value="${requestDto.keyword}"/>
+        <input type="hidden" name="type" th:value="${requestDto.type}" />
+        <input type="hidden" name="keyword" th:value="${requestDto.keyword}" />
       </form>
     </div>
   </div>
   <th:block layout:fragment="script">
     <script th:src="@{/js/modify.js}"></script>
     <script th:src="@{/js/upload.js}"></script>
-  
   </th:block>
 </html>

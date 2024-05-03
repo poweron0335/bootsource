@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -55,6 +56,23 @@ public class ReviewController {
         reviewService.removeReview(reviewNo);
 
         return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
+    // /299/5 + GET
+    @GetMapping("/{mno}/{reviewNo}")
+    public ResponseEntity<ReviewDto> getReview(@PathVariable("reviewNo") Long reviewNo) {
+        log.info("review 가져오기 {}", reviewNo);
+        return new ResponseEntity<>(reviewService.getReview(reviewNo), HttpStatus.OK);
+    }
+
+    @PutMapping("/{mno}/{reviewNo}")
+    public ResponseEntity<Long> putMethodName(@PathVariable("reviewNo") Long reviewNo,
+            @RequestBody ReviewDto reviewDto) {
+        log.info("review 수정 {}", reviewDto);
+
+        reviewService.updateReview(reviewDto);
+
+        return new ResponseEntity<>(reviewNo, HttpStatus.OK);
     }
 
 }

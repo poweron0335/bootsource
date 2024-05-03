@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
   <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/upload.css}">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">    
   </th:block>
   <div layout:fragment="content" class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">영화 등록</h2>
@@ -25,7 +25,6 @@
             multiple
           />
         </label>
-
         <div class="flex mt-6 text-sm">
           <button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 1.5rem">등록</button>
         </div>
@@ -46,7 +45,7 @@
          -->
         </ul>
       </div>
-    </div>
+    </div>    
     <th:block layout:fragment="script">
       <script th:src="@{/js/register.js}"></script>
       <script th:src="@{/js/upload.js}"></script>
