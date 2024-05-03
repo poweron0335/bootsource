@@ -40,23 +40,30 @@ public class MovieRepositoryTest {
     @Test
     public void movieInsertTest() {
         // 영화 / 영화이미지 샘플 데이터 추가
-        IntStream.rangeClosed(1, 100).forEach(i -> {
-            Movie movie = Movie.builder()
-                    .title("Movie" + i)
-                    .build();
-            movieRepository.save(movie);
+        // IntStream.rangeClosed(1, 100).forEach(i -> {
+        // Movie movie = Movie.builder()
+        // .title("Movie" + i)
+        // .build();
+        // movieRepository.save(movie);
 
-            int count = (int) (Math.random() * 5) + 1;
+        // int count = (int) (Math.random() * 5) + 1;
 
-            for (int j = 0; j < count; j++) {
-                MovieImage mImage = MovieImage.builder()
-                        .uuid(UUID.randomUUID().toString())
-                        .movie(movie)
-                        .imgName("img" + j + ".jpg")
-                        .build();
-                movieImageRepository.save(mImage);
-            }
-        });
+        // for (int j = 0; j < count; j++) {
+        // MovieImage mImage = MovieImage.builder()
+        // .uuid(UUID.randomUUID().toString())
+        // .movie(movie)
+        // .imgName("img" + j + ".jpg")
+        // .build();
+        // movieImageRepository.save(mImage);
+        // }
+        // });
+        Member member = Member.builder()
+                .email("admin1@naver.com")
+                .password(passwordEncoder.encode("1111"))
+                .memberRole(MemberRole.ADMIN)
+                .nickname("admin1")
+                .build();
+        memberRepository.save(member);
     }
 
     @Test

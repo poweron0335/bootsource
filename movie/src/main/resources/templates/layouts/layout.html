@@ -29,12 +29,11 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" th:href="@{/assets/css/tailwind.output.css}" />
+
     <!-- Loading third party fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script th:src="@{/assets/js/init-alpine.js}"></script> -->
-    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
-    r
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script th:src="@{/assets/js/init-alpine.js}"></script>
 
     <th:block layout:fragment="css"></th:block>
   </head>
@@ -51,7 +50,6 @@
         </main>
       </div>
     </div>
-
     <!-- 검색에서 사용할 폼 -->
     <form th:action="@{list}" method="get" id="searchForm">
       <input type="hidden" name="page" value="1" />
@@ -65,6 +63,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script> -->
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/search.js}"></script>
     <th:block layout:fragment="script"></th:block>
   </body>

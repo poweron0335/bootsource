@@ -20,4 +20,11 @@ public class MemberController {
         log.info("로그인 폼 요청");
     }
 
+    // /profile => profile.hmtl 보여주기
+
+    @GetMapping("/profile")
+    public void getProfile(@ModelAttribute("requestDto") PageRequestDto pageRequestDto) {
+        log.info("profile 요청");
+    }
+
 }
