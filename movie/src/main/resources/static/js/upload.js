@@ -58,6 +58,9 @@ fileInput.addEventListener('change', (e) => {
   // 파일을 서버로 업로드하기 위해 fetch를 사용하여 POST 요청을 보냄
   fetch('/upload/uploadAjax', {
     method: 'post', // HTTP 메서드를 POST로 설정
+    headers: {
+      'X-CSRF-TOKEN': csrfValue,
+    },
     body: formData, // FormData 객체를 요청의 본문으로 설정
   })
     .then((response) => response.json()) // 서버 응답을 JSON 형식으로 변환

@@ -16,7 +16,13 @@ document.querySelector('.uploadResult').addEventListener('click', (e) => {
   const formData = new FormData();
   formData.append('filePath', filePath);
 
-  fetch('/upload/remove', { method: 'post', body: formData })
+  fetch('/upload/remove', {
+    method: 'post',
+    headers: {
+      'X-CSRF-TOKEN': csrfValue,
+    },
+    body: formData,
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
