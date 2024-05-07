@@ -49,8 +49,9 @@ public class ReviewController {
 
     }
 
+    @PreAuthorize("authentication.name == #email")
     @DeleteMapping("/{mno}/{reviewno}")
-    public ResponseEntity<String> deleteReview(@PathVariable("reviewno") Long reviewNo) {
+    public ResponseEntity<String> deleteReview(@PathVariable("reviewno") Long reviewNo, String email) {
         log.info("리뷰 제거 {}", reviewNo);
 
         reviewService.removeReview(reviewNo);
@@ -65,6 +66,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.getReview(reviewNo), HttpStatus.OK);
     }
 
+    @PreAuthorize("authentication.name == #reviewDto.email")
     @PutMapping("/{mno}/{reviewNo}")
     public ResponseEntity<Long> putMethodName(@PathVariable("reviewNo") Long reviewNo,
             @RequestBody ReviewDto reviewDto) {
